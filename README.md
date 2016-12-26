@@ -7,3 +7,6 @@ Generate firsts jsx views
   - server/main.jsx
   - First App component
   - Routes
+
+in your shell, run:
+$ ./meteorAppGenerator.sh [Application Name]
