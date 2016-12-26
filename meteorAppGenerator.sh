@@ -42,6 +42,7 @@ touch $path/imports/ui/pages/notFoundPage.jsx
 
 echo "Directory Initialization ... [OK]"
 
+## client Main.html
 echo "<head>
   <title>$1</title>
 </head>
@@ -50,6 +51,7 @@ echo "<head>
   <div id="render-application"></div>
 </body>" >> $path/client/main.html
 
+## Client main.jsx
 echo "import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { render } from 'react-dom'
@@ -60,6 +62,7 @@ Meteor.startup(() => {
 	render(renderRoutes(), document.getElementById('render-application'));
 });" >> $path/client/main.jsx
 
+## Main App container
 echo "import React, { Component } from 'react';
 
 export default class App extends Component {
@@ -72,6 +75,7 @@ export default class App extends Component {
   }
 }" >> $path/imports/ui/components/App.jsx
 
+## Server main.jsx
 echo "import { Meteor } from 'meteor/meteor';
 
 // Data
@@ -82,6 +86,7 @@ Meteor.startup(() => {
   // code to run on server at startup
 }); " >> $path/server/main.js
 
+## Routes file
 echo "import React from 'react'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
@@ -92,5 +97,11 @@ export const renderRoutes = () => (
     	<Route path="*" component={NotFoundPage}/>
 	</Router>
 );" >> $path/imports/startup/client/routes.js
+
+echo "INSTRUCTIONS:
+ $ add react router to meteor
+ $ cd $1
+ $ meteor
+"
 
 exit 0
