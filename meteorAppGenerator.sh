@@ -33,14 +33,14 @@ touch $path/imports/startup/client/routes.js
 # ui
 mkdir $path/imports/ui
 mkdir $path/imports/ui/components
-touch $path/imports/ui/components/App.jsx
+mkdir $path/imports/ui/containers
+touch $path/imports/ui/containers/App.jsx
 mkdir $path/imports/ui/layouts
-touch $path/imports/ui/layouts/header.jsx
-touch $path/imports/ui/layouts/footer.jsx
+touch $path/imports/ui/layouts/Header.jsx
+touch $path/imports/ui/layouts/Footer.jsx
 mkdir $path/imports/ui/pages
-touch $path/imports/ui/pages/notFoundPage.jsx
-
-echo "Directory Initialization ... [OK]"
+touch $path/imports/ui/pages/NotFoundPage.jsx
+touch $path/imports/ui/pages/HomePage.jsx
 
 ## client Main.html
 echo "<head>
@@ -65,15 +65,54 @@ Meteor.startup(() => {
 ## Main App container
 echo "import React, { Component } from 'react';
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <div className="container">
-
+        {this.props.children}
       </div>
     );
   }
-}" >> $path/imports/ui/components/App.jsx
+}
+
+export default App;
+" >> $path/imports/ui/containers/App.jsx
+
+## NotfoundPage App container
+echo "import React, { Component } from 'react'
+
+class NotFoundPage extends Component {
+
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <h1>404 Not Found</h1>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default NotFoundPage;
+" >> $path/imports/ui/pages/NotFoundPage.jsx
+
+## Main App container
+echo "import React, { Component } from 'react'
+
+class HomePage extends Component {
+
+  render() {
+    return (
+      <div>
+        // Home Page Components
+      </div>
+    );
+  }
+}
+
+export default HomePage;
+" >> $path/imports/ui/pages/HomePage.jsx
 
 ## Server main.jsx
 echo "import { Meteor } from 'meteor/meteor';
@@ -91,16 +130,23 @@ echo "import React from 'react'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 // Import all pages for the Router
+import App from '../../ui/components/App.jsx'
+import HomePage from '../../ui/pages/HomePage.jsx'
+import NotFoundPage from '../../ui/pages/NotFoundPage.jsx'
 
 export const renderRoutes = () => (
 	<Router history={browserHistory}>
-    	<Route path="*" component={NotFoundPage}/>
+    <Route path="/" component={App}>
+      <IndexRoute component={HomePage}/>
+    </Route>
+    <Route path="*" component={NotFoundPage}/>
 	</Router>
 );" >> $path/imports/startup/client/routes.js
 
 echo "INSTRUCTIONS:
- $ add react router to meteor
  $ cd $1
+ $ meteor npm install
+ $ meteor npm install --save react react-dom react-router
  $ meteor
 "
 
