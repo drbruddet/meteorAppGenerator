@@ -56,7 +56,7 @@ echo "import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { render } from 'react-dom'
 
-import { renderRoutes } from '../imports/startup/client/routes.jsx'
+import { renderRoutes } from '../imports/startup/client/routes.js'
 
 Meteor.startup(() => {
 	render(renderRoutes(), document.getElementById('render-application'));
@@ -68,7 +68,7 @@ echo "import React, { Component } from 'react';
 class App extends Component {
   render() {
     return (
-      <div className="container">
+      <div className=\"container\">
         {this.props.children}
       </div>
     );
@@ -85,10 +85,8 @@ class NotFoundPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container">
-          <h1>404 Not Found</h1>
-        </div>
+      <div className=\"container\">
+        <h1>404 Not Found</h1>
       </div>
     );
   }
@@ -130,23 +128,21 @@ echo "import React from 'react'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 // Import all pages for the Router
-import App from '../../ui/components/App.jsx'
+import App from '../../ui/containers/App.jsx'
 import HomePage from '../../ui/pages/HomePage.jsx'
 import NotFoundPage from '../../ui/pages/NotFoundPage.jsx'
 
 export const renderRoutes = () => (
 	<Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path=\"/\" component={App}>
       <IndexRoute component={HomePage}/>
     </Route>
-    <Route path="*" component={NotFoundPage}/>
+    <Route path=\"*\" component={NotFoundPage}/>
 	</Router>
 );" >> $path/imports/startup/client/routes.js
 
 echo "INSTRUCTIONS:
- $ cd $1
- $ meteor npm install
- $ meteor npm install --save react react-dom react-router
+ $ cd $1 ; meteor npm install ; meteor npm install --save react react-dom react-router
  $ meteor
 "
 
